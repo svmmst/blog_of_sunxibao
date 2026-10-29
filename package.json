@@ -1,0 +1,12 @@
+{
+  "name": "blog_of_sunxibao",
+  "version": "1.0.0",
+  "description": "东篱草堂 · 孙希宝的田园慢生活随笔博客",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": ["blog", "cloudflared-pages", "pastoral", "donglicaotang"],
+  "author": "孙希宝 <sunxibao@gmail.com>",
+  "license": "MIT"
+}
