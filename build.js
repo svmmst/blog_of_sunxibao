@@ -12,7 +12,9 @@ const path = require('path');
 const ROOT_DIR = __dirname;
 const POSTS_DIR = path.join(ROOT_DIR, 'posts');
 const TEMPLATE_FILE = path.join(ROOT_DIR, 'template.html');
+const DIST_DIR = path.join(ROOT_DIR, 'dist');
 const OUTPUT_FILE = path.join(ROOT_DIR, 'index.html');
+const DIST_OUTPUT_FILE = path.join(DIST_DIR, 'index.html');
 
 function parseMarkdownFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8');
@@ -119,10 +121,14 @@ function build() {
   template = template.replace('{{ESSAYS_CARDS}}', cardsHtml);
   template = template.replace('{{ESSAYS_DATA}}', JSON.stringify(essaysData, null, 2));
 
-  // 4. 写出 index.html
+  // 4. 写出产物文件（输出至 dist 目录及根目录）
+  if (!fs.existsSync(DIST_DIR)) {
+    fs.mkdirSync(DIST_DIR, { recursive: true });
+  }
+  fs.writeFileSync(DIST_OUTPUT_FILE, template, 'utf-8');
   fs.writeFileSync(OUTPUT_FILE, template, 'utf-8');
 
-  console.log(`✨ 编纂完成！已生成 ${OUTPUT_FILE}`);
+  console.log(`✨ 编纂完成！已生成 ${DIST_OUTPUT_FILE} 与 ${OUTPUT_FILE}`);
 }
 
 build();
