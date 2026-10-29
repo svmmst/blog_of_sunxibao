@@ -107,12 +107,20 @@ function build() {
       </article>`;
   }).join('\n\n');
 
-  // 2. 生成弹窗数据 JSON
+  // 2. 生成弹窗数据 JSON (支持 Markdown 图片语法自动装裱为宣纸画框)
   const essaysData = posts.map(post => ({
     title: post.meta.title,
     date: post.meta.date,
     category: `${post.meta.category} · 约 ${post.meta.word_count || post.bodyRaw.replace(/\s+/g, '').length} 字`,
-    content: post.paragraphs
+    content: post.paragraphs.map(p => {
+      const imgMatch = p.match(/^!\[(.*?)\]\((.*?)\)$/);
+      if (imgMatch) {
+        const alt = imgMatch[1];
+        const src = imgMatch[2];
+        return `<figure class="article-figure"><img src="${src}" alt="${alt}" loading="lazy">${alt ? `<figcaption>▲ ${alt}</figcaption>` : ''}</figure>`;
+      }
+      return p;
+    })
   }));
 
   // 3. 读取模板并替换占位符

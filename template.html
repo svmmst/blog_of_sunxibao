@@ -1050,6 +1050,39 @@
     margin-bottom: 18px;
   }
 
+  /* 散文配图与小像装裱样式 */
+  .modal-article-body figure.article-figure {
+    margin: 28px auto;
+    text-align: center;
+    text-indent: 0;
+    max-width: 480px;
+  }
+
+  .modal-article-body figure.article-figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 6px solid var(--bg-paper);
+    outline: 1px solid var(--border);
+    box-shadow: 0 8px 28px rgba(45, 35, 25, 0.14);
+    display: block;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+  }
+
+  .modal-article-body figure.article-figure img:hover {
+    transform: scale(1.015);
+  }
+
+  .modal-article-body figure.article-figure figcaption {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    font-family: var(--font-brush);
+    letter-spacing: 0.08em;
+    text-indent: 0;
+  }
+
   .modal-article-footer {
     margin-top: 36px;
     padding-top: 20px;
@@ -1831,7 +1864,10 @@
       <span>著者：东篱居士</span>
     `;
 
-    modalBody.innerHTML = art.content.map(paragraph => `<p>${paragraph}</p>`).join('');
+    modalBody.innerHTML = art.content.map(p => {
+      const trimmed = p.trim();
+      return trimmed.startsWith('<figure') || trimmed.startsWith('<p') ? trimmed : `<p>${trimmed}</p>`;
+    }).join('');
     readingModal.removeAttribute('hidden');
     readingModal.style.display = 'flex';
     readingModal.classList.add('is-open');
