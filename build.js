@@ -144,33 +144,15 @@ Sitemap: https://740808.xyz/sitemap.xml
   fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt, 'utf-8');
   fs.writeFileSync(path.join(ROOT_DIR, 'robots.txt'), robotsTxt, 'utf-8');
 
-  // 6. 自动生成站点地图 (sitemap.xml)
+  // 6. 自动生成站点地图 (sitemap.xml - 符合 Google/Baidu 标准，严禁携带 # 锚点)
   const todayIso = new Date().toISOString().split('T')[0];
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://740808.xyz/</loc>
     <lastmod>${todayIso}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://740808.xyz/#tab-biography</loc>
-    <lastmod>${todayIso}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://740808.xyz/#tab-essays</loc>
-    <lastmod>${todayIso}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://740808.xyz/#tab-guestbook</loc>
-    <lastmod>${todayIso}</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>1.0</priority>
   </url>
 </urlset>
 `;
