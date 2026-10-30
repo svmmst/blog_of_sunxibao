@@ -35,14 +35,9 @@ function containsSpam(text) {
 
 // 自动初始化数据库表结构
 async function ensureTable(db) {
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS messages (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nickname TEXT NOT NULL,
-      content TEXT NOT NULL,
-      created_at TEXT NOT NULL
-    );
-  `);
+  await db.prepare(
+    "CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, nickname TEXT NOT NULL, content TEXT NOT NULL, created_at TEXT NOT NULL)"
+  ).run();
 }
 
 // GET: 获取最新茶客留言列表（取最新 30 条）
