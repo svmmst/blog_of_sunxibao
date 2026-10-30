@@ -289,6 +289,105 @@
     overflow: hidden;
   }
 
+  .hero-flex-layout {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 36px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-left-column {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-portrait-card {
+    width: 250px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hero-portrait-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .portrait-photo-frame {
+    width: 100%;
+    aspect-ratio: 750 / 852;
+    overflow: hidden;
+    border-radius: calc(var(--radius-md) - 2px);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-paper);
+  }
+
+  .hero-portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .hero-portrait-card:hover .hero-portrait-img {
+    transform: scale(1.025);
+  }
+
+  .portrait-caption {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .portrait-caption-title {
+    font-family: var(--font-brush);
+    font-size: 1.15rem;
+    color: var(--ink-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .portrait-mini-seal {
+    font-size: 0.75rem;
+    color: var(--seal-red);
+    border: 1px solid var(--seal-red);
+    padding: 1px 4px;
+    border-radius: 2px;
+    background: var(--seal-red-bg);
+  }
+
+  .portrait-caption-sub {
+    font-size: 0.78rem;
+    color: var(--ink-light);
+    margin-top: 3px;
+    font-family: var(--font-serif);
+  }
+
+  @media (max-width: 820px) {
+    .hero-flex-layout {
+      flex-direction: column-reverse;
+      gap: 24px;
+    }
+    .hero-portrait-card {
+      width: 200px;
+      margin: 0 auto;
+    }
+  }
+
   /* 背景水墨山峦装饰 (SVG) */
   .hero-landscape-bg {
     position: absolute;
@@ -1374,59 +1473,78 @@
       <path d="M60,190 Q180,60 280,150 T400,120 L400,200 L60,200 Z" opacity="0.6" />
     </svg>
 
-    <div class="hero-main-row">
-      <div class="cottage-brand">
-        <!-- 朱砂印章【悠然】 -->
-        <div class="seal-stamp" title="东篱草堂印信">
-          <span>悠</span>
-          <span>然</span>
+    <div class="hero-flex-layout">
+      <!-- 左栏：堂号、小志、悠然指标 -->
+      <div class="hero-left-column">
+        <div class="hero-main-row">
+          <div class="cottage-brand">
+            <!-- 朱砂印章【悠然】 -->
+            <div class="seal-stamp" title="东篱草堂印信">
+              <span>悠</span>
+              <span>然</span>
+            </div>
+
+            <div class="cottage-names">
+              <h1 class="cottage-title">东篱草堂 · 孙希宝</h1>
+              <div class="cottage-subtitle">
+                <span>采菊东篱下 · 悠然见南山</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 竖排小诗句 -->
+          <div class="vertical-couplet" aria-hidden="true">
+            山气日夕佳 飞鸟相与还
+          </div>
         </div>
 
-        <div class="cottage-names">
-          <h1 class="cottage-title">东篱草堂</h1>
-          <div class="cottage-subtitle">
-            <span>采菊东篱下 · 悠然见南山</span>
+        <!-- 主人归隐小志 -->
+        <div class="cottage-manifesto">
+          <p>
+            生于齐鲁，客次胶东。IT软件与银行架构三十载，奔波于微末代码与宏篇方案之间。五十知天命，忽悟“既自以心为形役，奚惆怅而独悲”。遂辟草堂于东篱，手艺金菊，植柳修竹。
+          </p>
+          <p>
+            此间无案牍纷扰，惟晴耕雨读，朝侍花草，暮抚素琴，煎茶引泉以候同道。立此方寸小站，既存余年山野手作与草木之变，亦为昔年同窗、同事与故旧知交，留一处静水深流之重逢茶席。
+          </p>
+
+          <!-- 退休生活悠然指标 -->
+          <div class="rural-stats-bar">
+            <span class="stat-pill">
+              <span>归畊居山</span>
+              <strong id="daysCount">436</strong> 天
+            </span>
+            <span class="stat-pill">
+              <span>篱畔艺菊</span>
+              <strong>38</strong> 盆
+            </span>
+            <span class="stat-pill">
+              <span>杂著随笔</span>
+              <strong>6</strong> 篇
+            </span>
+            <span class="stat-pill">
+              <span>日试清茗</span>
+              <strong>3</strong> 瓯
+            </span>
+            <span class="stat-pill">
+              <span>手作木器</span>
+              <strong>16</strong> 件
+            </span>
           </div>
         </div>
       </div>
 
-      <!-- 竖排小诗句 -->
-      <div class="vertical-couplet" aria-hidden="true">
-        山气日夕佳 飞鸟相与还
-      </div>
-    </div>
-
-    <!-- 主人归隐小志 -->
-    <div class="cottage-manifesto">
-      <p>
-        生于齐鲁，客次胶东。IT软件与银行架构三十载，奔波于微末代码与宏篇方案之间。五十知天命，忽悟“既自以心为形役，奚惆怅而独悲”。遂辟草堂于东篱，手艺金菊，植柳修竹。
-      </p>
-      <p>
-        此间无案牍纷扰，惟晴耕雨读，朝侍花草，暮抚素琴，煎茶引泉以候同道。立此方寸小站，既存余年山野手作与草木之变，亦为昔年同窗、同事与故旧知交，留一处静水深流之重逢茶席。
-      </p>
-
-      <!-- 退休生活悠然指标 -->
-      <div class="rural-stats-bar">
-        <span class="stat-pill">
-          <span>归畊居山</span>
-          <strong id="daysCount">436</strong> 天
-        </span>
-        <span class="stat-pill">
-          <span>篱畔艺菊</span>
-          <strong>38</strong> 盆
-        </span>
-        <span class="stat-pill">
-          <span>杂著随笔</span>
-          <strong>6</strong> 篇
-        </span>
-        <span class="stat-pill">
-          <span>日试清茗</span>
-          <strong>3</strong> 瓯
-        </span>
-        <span class="stat-pill">
-          <span>手作木器</span>
-          <strong>16</strong> 件
-        </span>
+      <!-- 右栏：主人中堂装裱小像 (Master Framed Portrait) -->
+      <div class="hero-portrait-card">
+        <div class="portrait-photo-frame">
+          <img src="/hero-portrait.jpg" alt="东篱草堂主人 孙希宝" class="hero-portrait-img" loading="eager">
+        </div>
+        <div class="portrait-caption">
+          <div class="portrait-caption-title">
+            <span>草堂主人 · 孙希宝</span>
+            <span class="portrait-mini-seal">知命</span>
+          </div>
+          <div class="portrait-caption-sub">甲辰深秋 · 晴耕归园小照</div>
+        </div>
       </div>
     </div>
   </section>

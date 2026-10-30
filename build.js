@@ -136,10 +136,12 @@ function build() {
   fs.writeFileSync(DIST_OUTPUT_FILE, template, 'utf-8');
   fs.writeFileSync(OUTPUT_FILE, template, 'utf-8');
 
-  // 复制社交分享大卡片横幅
-  if (fs.existsSync(path.join(ROOT_DIR, 'og-card.jpg'))) {
-    fs.copyFileSync(path.join(ROOT_DIR, 'og-card.jpg'), path.join(DIST_DIR, 'og-card.jpg'));
-  }
+  // 复制社交分享大卡片横幅与门首小像
+  ['og-card.jpg', 'hero-portrait.jpg'].forEach(imgFile => {
+    if (fs.existsSync(path.join(ROOT_DIR, imgFile))) {
+      fs.copyFileSync(path.join(ROOT_DIR, imgFile), path.join(DIST_DIR, imgFile));
+    }
+  });
 
   // 5. 自动生成搜索引擎索引路标 (robots.txt)
   const robotsTxt = `User-agent: *
