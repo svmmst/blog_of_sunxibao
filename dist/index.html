@@ -1643,12 +1643,21 @@
             <textarea id="guestNote" class="form-textarea" rows="4" placeholder="在此写下您对草堂、退休隐逸或诗词的只言片语……" required maxlength="160"></textarea>
           </div>
 
+          <!-- 蜜罐陷阱输入框（普通人类看不到，自动爬虫会自动填入并被秒杀） -->
+          <input type="text" id="honeypotField" name="honeypot_field" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
+
           <div class="form-group">
-            <label for="guestRiddle">草堂诗韵暗号（防网络骚扰）：</label>
-            <div style="font-size: 0.88rem; color: var(--ink-light); margin-bottom: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <label for="guestRiddle">草堂诗韵暗号（防自动化骚扰）：</label>
+              <button type="button" id="refreshRiddleBtn" onclick="fetchNewRiddle()" style="background: none; border: none; color: var(--seal-red); font-size: 0.84rem; cursor: pointer; text-decoration: underline; padding: 0;">
+                🔄 换一题
+              </button>
+            </div>
+            <div id="riddleQuestionText" style="font-size: 0.92rem; color: var(--ink-dark); margin: 6px 0 8px 0; font-family: var(--font-brush); letter-spacing: 0.05em; background: var(--bg-hover); padding: 8px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--seal-red);">
               “采菊东篱下，悠然见______？”
             </div>
-            <input type="text" id="guestRiddle" class="form-input" placeholder="请填二字（如：南山）" required maxlength="10">
+            <input type="hidden" id="currentRiddleId" value="0">
+            <input type="text" id="guestRiddle" class="form-input" placeholder="请根据诗意填入空缺之字" required maxlength="8" autocomplete="off">
           </div>
 
           <button type="submit" class="submit-seal-btn" id="submitNoteBtn">
@@ -2082,11 +2091,40 @@
     }
   }
 
-  // 页面就绪后拉取云端真实留言
+  // 动态抽取诗词暗号题目
+  window.fetchNewRiddle = async function() {
+    const qEl = document.getElementById('riddleQuestionText');
+    const idEl = document.getElementById('currentRiddleId');
+    const ansInput = document.getElementById('guestRiddle');
+    if (!qEl || !idEl) return;
+
+    qEl.textContent = '正在抽取东篱诗卷……';
+    if (ansInput) ansInput.value = '';
+
+    try {
+      const res = await fetch('/api/riddle');
+      if (!res.ok) throw new Error('网络请求受阻');
+      const data = await res.json();
+      if (data.success) {
+        qEl.textContent = `“${data.question}”`;
+        idEl.value = data.riddle_id;
+      }
+    } catch (e) {
+      // 备用兜底题目
+      qEl.textContent = '“采菊东篱下，悠然见______？”';
+      idEl.value = 0;
+    }
+  };
+
+  // 页面就绪后拉取云端真实留言与诗题
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadGuestMessages);
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGuestMessages();
+      fetchNewRiddle();
+    });
   } else {
     loadGuestMessages();
+    fetchNewRiddle();
   }
 
   window.handleGuestSubmit = async function(event) {
@@ -2094,11 +2132,15 @@
     const nameInput = document.getElementById('guestName');
     const noteInput = document.getElementById('guestNote');
     const riddleInput = document.getElementById('guestRiddle');
+    const riddleIdInput = document.getElementById('currentRiddleId');
+    const honeypotInput = document.getElementById('honeypotField');
     const btn = document.getElementById('submitNoteBtn') || document.querySelector('.submit-seal-btn');
 
     const nickname = nameInput.value.trim();
     const content = noteInput.value.trim();
     const riddle_answer = riddleInput ? riddleInput.value.trim() : '';
+    const riddle_id = riddleIdInput ? riddleIdInput.value : 0;
+    const honeypot_field = honeypotInput ? honeypotInput.value : '';
 
     if (!nickname || !content) {
       alert('请客官留下雅号与随笔题词');
@@ -2113,7 +2155,7 @@
       const res = await fetch('/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname, content, riddle_answer })
+        body: JSON.stringify({ nickname, content, riddle_answer, riddle_id, honeypot_field })
       });
       const data = await res.json();
 
@@ -2187,4 +2229,3 @@
 </script>
 </body>
 </html>
-<!-- Deploy trigger: 2026-10-30 11:22:20 -->
