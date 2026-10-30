@@ -3,7 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>东篱草堂</title>
+  <title>东篱草堂 · 孙希宝的田园慢生活与归隐杂著</title>
+  <meta name="author" content="孙希宝">
+  <meta name="description" content="孙希宝（740808）的个人独立博客【东篱草堂】。1974年生于山东安丘，安丘一中、青岛大学校友，历经青岛整流器总厂、中天科技、浪潮通用软件、天泰集团与IBM三十载金融与企业系统架构生涯。五十知天命，于此记录晴耕雨读、陶然手作、草木四时与半生履痕，静候故友重逢。">
+  <meta name="keywords" content="孙希宝, 孙希宝博客, 东篱草堂, 740808, 山东安丘 孙希宝, 安丘一中 孙希宝, 青岛大学 孙希宝, 浪潮 孙希宝, IBM 孙希宝">
+
+  <!-- 结构化数据 (JSON-LD)，便于搜索引擎精准建立“孙希宝”个人知识档案卡 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "孙希宝",
+    "alternateName": "东篱居士",
+    "birthDate": "1974",
+    "birthPlace": {
+      "@type": "Place",
+      "name": "山东省安丘市"
+    },
+    "alumniOf": [
+      { "@type": "EducationalOrganization", "name": "山东安丘一中" },
+      { "@type": "EducationalOrganization", "name": "青岛大学" }
+    ],
+    "url": "https://740808.xyz",
+    "image": "https://img.740808.xyz/977699672.jpg",
+    "description": "三十载IT系统设计与架构咨询师，五十知天命于东篱草堂晴耕雨读、手作清茗。"
+  }
+  </script>
 <meta name="claude:viewport-fit-sides" content="cover">
 
 <!-- 引入中文字体：思源宋体 (典雅书卷) 与 马善政毛笔字体 (文人洒脱) -->
@@ -1109,6 +1134,150 @@
   }
 
   /* ==========================================================================
+     履痕故知 (致故人书与编年履迹)
+     ========================================================================== */
+  .bio-scroll-card {
+    background: var(--bg-paper);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 36px 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bio-letter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+
+  .bio-letter-title {
+    font-family: var(--font-brush);
+    font-size: 1.85rem;
+    color: var(--ink-dark);
+  }
+
+  .bio-letter-seal {
+    font-family: var(--font-brush);
+    color: var(--seal-red);
+    border: 1px solid var(--seal-red);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    background: var(--seal-red-bg);
+  }
+
+  .bio-letter-body {
+    font-size: 1.05rem;
+    line-height: 2.1;
+    color: var(--ink-dark);
+  }
+
+  .bio-letter-body p {
+    text-indent: 2em;
+    margin-bottom: 18px;
+  }
+
+  .bio-timeline-wrapper {
+    margin-top: 40px;
+  }
+
+  .bio-timeline-title {
+    font-family: var(--font-brush);
+    font-size: 1.6rem;
+    color: var(--ink-dark);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .timeline-tree {
+    position: relative;
+    padding-left: 28px;
+    border-left: 2px solid var(--border);
+    margin-left: 12px;
+  }
+
+  .timeline-branch {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -35px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--seal-red);
+    border: 3px solid var(--bg-paper);
+    box-shadow: 0 0 0 1px var(--seal-red);
+  }
+
+  .timeline-period {
+    font-size: 0.88rem;
+    color: var(--seal-red);
+    font-family: var(--font-brush);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .timeline-entity {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--ink-dark);
+    font-family: var(--font-serif);
+    margin-bottom: 6px;
+  }
+
+  .timeline-role {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  .timeline-tag-pill {
+    display: inline-block;
+    background: var(--bg-hover);
+    color: var(--ink-light);
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 6px;
+  }
+
+  .reunion-box {
+    background: var(--chrys-gold-bg);
+    border: 1px dashed var(--chrys-gold);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-top: 36px;
+    text-align: center;
+  }
+
+  .reunion-box h4 {
+    font-family: var(--font-brush);
+    font-size: 1.35rem;
+    color: var(--ink-dark);
+    margin-bottom: 10px;
+  }
+
+  .reunion-box p {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto 16px auto;
+  }
+
+  /* ==========================================================================
      页脚（归园田居记）
      ========================================================================== */
   .dongli-footer {
@@ -1206,10 +1375,10 @@
     <!-- 主人归隐小志 -->
     <div class="cottage-manifesto">
       <p>
-        六十花甲，解绶归田。既远簿书之劳，复还山林之乐。筑小室于东篱，植五株柳，手艺金菊数畦。
+        生于齐鲁，客次胶东。IT软件与银行架构三十载，奔波于微末代码与宏篇方案之间。五十知天命，忽悟“既自以心为形役，奚惆怅而独悲”。遂辟草堂于东篱，手艺金菊，植柳修竹。
       </p>
       <p>
-        此间无尘俗挂碍，惟晴耕雨读，朝侍花草，暮抚素琴，煎茶引泉以候同道。立此方寸小站，不逐流量，只为存录残年所思、手作温存与草木四时之变。
+        此间无案牍纷扰，惟晴耕雨读，朝侍花草，暮抚素琴，煎茶引泉以候同道。立此方寸小站，既存余年山野手作与草木之变，亦为昔年同窗、同事与故旧知交，留一处静水深流之重逢茶席。
       </p>
 
       <!-- 退休生活悠然指标 -->
@@ -1251,6 +1420,9 @@
     </button>
     <button class="nav-tab-item" data-tab="teasets" role="tab">
       <span>🍵</span> 岁时茶席
+    </button>
+    <button class="nav-tab-item" data-tab="biography" role="tab">
+      <span>📜</span> 履痕故知
     </button>
     <button class="nav-tab-item" data-tab="guestbook" role="tab">
       <span>✉️</span> 煮茗候友
@@ -1528,7 +1700,138 @@
   </section>
 
   <!-- ==========================================================================
-     栏目 5：煮茗候友 (留言壁 / 来客小笺)
+       栏目 5：履痕故知 (孙希宝致故人书 · 半生编年纪事)
+       ========================================================================== -->
+  <section id="tab-biography" class="view-panel">
+    <div class="section-intro-header">
+      <div>
+        <h2 class="section-intro-title">履痕故知</h2>
+        <p class="section-tagline">“人生到处知何似，应似飞鸿踏雪泥。泥上偶然留指爪，鸿飞那复计东西。”</p>
+      </div>
+    </div>
+
+    <!-- 致故人书卷轴卡片 -->
+    <div class="bio-scroll-card">
+      <div class="bio-letter-header">
+        <div class="bio-letter-title">致故人书 · 见字如面</div>
+        <div class="bio-letter-seal">孙希宝 · 谨致</div>
+      </div>
+
+      <div class="bio-letter-body">
+        <p>
+          若君曾与我负笈同窗于安丘一中、漫步求学于青大校园；或曾共事攻坚于整流器厂、中天、浪潮、天泰与IBM之项目长夜；亦或相聚于齐鲁故园桑梓之亲朋故旧……偶然在万维网络烟波之中键入余名而寻至东篱，见字如面。
+        </p>
+        <p>
+          三十载春秋，指尖流淌过数以百万计的微末代码与宏篇架构方案，奔波于金融系统与企业信息化的时代浪潮之中。虽竭尽心力，然未敢稍忘山野初生之澄澈本心。岁次甲辰，年届知天命。古人云：“既自以心为形役，奚惆怅而独悲！”乃于网络云海辟东篱草堂，取农历诞辰之数“七四零八零八”挂匾，既为存录晴耕雨读、手作清茗之雅趣，亦为此身半生履痕留一处静水深流之港湾。
+        </p>
+        <p>
+          山川悠远，音容如昨。若故友驻足于此，知我体健神安，晴耕自适，亦足慰平生相知之念。草堂松风瓦壶常沸，泉甘茶苦，静候同道故人推扉。
+        </p>
+      </div>
+
+      <!-- 编年履痕树状图 -->
+      <div class="bio-timeline-wrapper">
+        <div class="bio-timeline-title">
+          <span>🌿</span> 半生履痕纪年
+        </div>
+
+        <div class="timeline-tree">
+          <!-- 节点 1 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">1974 · 岁次甲寅</div>
+            <div class="timeline-entity">齐鲁初生 · 山东安丘</div>
+            <div class="timeline-role">生于齐鲁大地、安丘故园。父母赋形之始，亦即小站域名“740808”之生命坐标。</div>
+            <span class="timeline-tag-pill">故乡桑梓</span>
+          </div>
+
+          <!-- 节点 2 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">1990 - 1993</div>
+            <div class="timeline-entity">山东安丘一中</div>
+            <div class="timeline-role">青春负笈，青葱岁月。古城青州南麓，苦读寒窗，立凌云之志。</div>
+            <span class="timeline-tag-pill">高中同窗</span>
+          </div>
+
+          <!-- 节点 3 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">1993 - 1997</div>
+            <div class="timeline-entity">青岛大学</div>
+            <div class="timeline-role">求学黄海之滨、浮山脚下。研习计算工学之术，沐海风而拓胸襟。</div>
+            <span class="timeline-tag-pill">大学同窗</span>
+          </div>
+
+          <!-- 节点 4 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">1997 - 1998</div>
+            <div class="timeline-entity">青岛整流器总厂</div>
+            <div class="timeline-role">步出黉舍，初入社会。扎根岛城实体工业基石，奠定工程严谨务实之风。</div>
+            <span class="timeline-tag-pill">初入职涯</span>
+          </div>
+
+          <!-- 节点 5 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">1998 - 2001</div>
+            <div class="timeline-entity">长天集团 · 青岛中天科技</div>
+            <div class="timeline-role">投身国内金融信息化起飞大潮，深耕银行核心业务系统开发与系统攻坚。</div>
+            <span class="timeline-tag-pill">银行系统</span>
+          </div>
+
+          <!-- 节点 6 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">2001 - 2005</div>
+            <div class="timeline-entity">浪潮通用软件公司</div>
+            <div class="timeline-role">执笔企业大型资金结算系统架构设计与研发，穿行于齐鲁泉城与国内大型集团。</div>
+            <span class="timeline-tag-pill">资金结算</span>
+          </div>
+
+          <!-- 节点 7 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">2006 - 2009</div>
+            <div class="timeline-entity">青岛天泰房地产集团</div>
+            <div class="timeline-role">立足岛城，总揽大型企业信息化整体规划与落地，从技术纵深迈向全局治理。</div>
+            <span class="timeline-tag-pill">企业信息化</span>
+          </div>
+
+          <!-- 节点 8 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">2010 - 至今</div>
+            <div class="timeline-entity">IBM（国际商业机器）</div>
+            <div class="timeline-role">十余载深耕金融银行业核心系统设计开发、顶层方案咨询与复杂大工程架构之道。</div>
+            <span class="timeline-tag-pill">系统架构与方案咨询</span>
+          </div>
+
+          <!-- 节点 9 -->
+          <div class="timeline-branch">
+            <div class="timeline-dot"></div>
+            <div class="timeline-period">甲辰知命 · 今朝</div>
+            <div class="timeline-entity">东篱草堂 · 晴耕雨读</div>
+            <div class="timeline-role">五十而知天命，筑室赛博云山。修竹艺菊，手作木器，烹泉品茗，静水深流以度流年。</div>
+            <span class="timeline-tag-pill">归园田居</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 老友相逢指引框 -->
+      <div class="reunion-box">
+        <h4>“相逢一笑，莫逆于心”</h4>
+        <p>若君恰为昔年故人、同学或同事，忽见此页，不妨移步至【煮茗候友】题留一二近况或雅号，待我温水烹茶，与君促膝长忆。</p>
+        <button type="button" class="submit-seal-btn" style="margin: 0 auto; display: inline-flex;" onclick="document.querySelector('[data-tab=guestbook]').click()">
+          <span>✉️</span> 移步题签留言簿 →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+     栏目 6：煮茗候友 (留言壁 / 来客小笺)
      ========================================================================== */ -->
   <section id="tab-guestbook" class="view-panel">
     <div class="section-intro-header">
