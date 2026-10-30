@@ -8,5 +8,11 @@
   },
   "assets": {
     "directory": "./dist"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_id": "5ffa3992-25ef-4ab0-8672-47f516f0bed1"
+    }
+  ]
 }

@@ -2154,7 +2154,7 @@
 
   // 简易 XSS 转义安全保障
   function escapeHTML(str) {
-    return str.replace(/[&<>'"]/g,
+    return String(str ?? '').replace(/[&<>'"]/g,
       tag => ({
         '&': '&amp;',
         '<': '&lt;',
