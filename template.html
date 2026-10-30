@@ -1552,10 +1552,18 @@
 
           <div class="form-group">
             <label for="guestNote">题留雅言 / 问候：</label>
-            <textarea id="guestNote" class="form-textarea" rows="4" placeholder="在此写下您对草堂、退休隐逸或诗词的只言片语……" required maxlength="200"></textarea>
+            <textarea id="guestNote" class="form-textarea" rows="4" placeholder="在此写下您对草堂、退休隐逸或诗词的只言片语……" required maxlength="160"></textarea>
           </div>
 
-          <button type="submit" class="submit-seal-btn">
+          <div class="form-group">
+            <label for="guestRiddle">草堂诗韵暗号（防网络骚扰）：</label>
+            <div style="font-size: 0.88rem; color: var(--ink-light); margin-bottom: 6px;">
+              “采菊东篱下，悠然见______？”
+            </div>
+            <input type="text" id="guestRiddle" class="form-input" placeholder="请填二字（如：南山）" required maxlength="10">
+          </div>
+
+          <button type="submit" class="submit-seal-btn" id="submitNoteBtn">
             <span>🔖</span> 钤印留题
           </button>
         </form>
@@ -1895,57 +1903,106 @@
   });
 
   /* --------------------------------------------------------------------------
-     6. 煮茗候友 · 访客题壁留言（动态生成带印章的竹笺）
+     6. 煮茗候友 · 访客题壁留言（对接 Cloudflare D1 边缘数据库与文人防伪）
      -------------------------------------------------------------------------- */
-  window.handleGuestSubmit = function(event) {
+  async function loadGuestMessages() {
+    try {
+      const res = await fetch('/api/messages');
+      if (!res.ok) return;
+      const json = await res.json();
+      if (!json.success || !Array.isArray(json.data) || json.data.length === 0) return;
+
+      const guestList = document.getElementById('guestNotesList');
+      if (!guestList) return;
+
+      const newItemsHtml = json.data.map(item => `
+        <div class="guest-card" style="animation: fadeIn 0.4s ease;">
+          <div class="guest-card-header">
+            <div class="guest-author">
+              <span>${escapeHTML(item.nickname)}</span>
+              <span class="guest-mini-seal">留墨</span>
+            </div>
+            <span class="guest-time">${escapeHTML(item.created_at || '近时')}</span>
+          </div>
+          <div class="guest-text">
+            ${escapeHTML(item.content)}
+          </div>
+        </div>
+      `).join('');
+
+      guestList.innerHTML = newItemsHtml;
+    } catch (e) {
+      console.log('读取草堂留墨：', e);
+    }
+  }
+
+  // 页面就绪后拉取云端真实留言
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadGuestMessages);
+  } else {
+    loadGuestMessages();
+  }
+
+  window.handleGuestSubmit = async function(event) {
     event.preventDefault();
     const nameInput = document.getElementById('guestName');
     const noteInput = document.getElementById('guestNote');
-    const name = nameInput.value.trim();
-    const note = noteInput.value.trim();
+    const riddleInput = document.getElementById('guestRiddle');
+    const btn = document.getElementById('submitNoteBtn') || document.querySelector('.submit-seal-btn');
 
-    if (!name || !note) return;
+    const nickname = nameInput.value.trim();
+    const content = noteInput.value.trim();
+    const riddle_answer = riddleInput ? riddleInput.value.trim() : '';
 
-    const guestList = document.getElementById('guestNotesList');
+    if (!nickname || !content) {
+      alert('请客官留下雅号与随笔题词');
+      return;
+    }
 
-    // 创建全新留言卡片
-    const newCard = document.createElement('div');
-    newCard.className = 'guest-card';
-    newCard.style.animation = 'fadeIn 0.4s ease';
-
-    newCard.innerHTML = `
-      <div class="guest-card-header">
-        <div class="guest-author">
-          <span>${escapeHTML(name)}</span>
-          <span class="guest-mini-seal">新题</span>
-        </div>
-        <span class="guest-time">方才片刻</span>
-      </div>
-      <div class="guest-text">
-        ${escapeHTML(note)}
-      </div>
-    `;
-
-    // 插入到最顶部
-    guestList.insertBefore(newCard, guestList.firstChild);
-
-    // 清空表单
-    nameInput.value = '';
-    noteInput.value = '';
-
-    // 轻柔提示
-    const btn = document.querySelector('.submit-seal-btn');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '<span>✅</span> 题墨已落款！';
-    btn.style.background = 'var(--bamboo-green)';
-    setTimeout(() => {
-      btn.innerHTML = originalText;
-      btn.style.background = '';
-    }, 2200);
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> 奉笺中……';
 
-    // 如果开启了音频，落款时伴随一声清脆磬音
-    if (audioCtx) {
-      playSingingChime(639, 3.5);
+    try {
+      const res = await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nickname, content, riddle_answer })
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        alert(data.error || '题签未成，请稍候重试');
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        return;
+      }
+
+      // 成功：清空输入框
+      nameInput.value = '';
+      noteInput.value = '';
+      if (riddleInput) riddleInput.value = '';
+
+      btn.innerHTML = '<span>✅</span> 题墨已落款！';
+      btn.style.background = 'var(--bamboo-green)';
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+      }, 2400);
+
+      // 伴随一声清脆磬音
+      if (typeof audioCtx !== 'undefined' && audioCtx) {
+        playSingingChime(639, 3.5);
+      }
+
+      // 重新加载留言墙
+      loadGuestMessages();
+
+    } catch (err) {
+      alert('网络微有风浪，题签未能传达：' + err.message);
+      btn.disabled = false;
+      btn.innerHTML = originalText;
     }
   };
 
