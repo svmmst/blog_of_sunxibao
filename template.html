@@ -303,9 +303,9 @@
     min-width: 0;
   }
 
-  /* 主人小像框：背景与草堂宣纸底色完全融为一体，高度收拢不遮挡远山 */
+  /* 主人小像框：恢复挺拔大气原版高度，宣纸底色无缝融和，与山峦形成画中画层叠 */
   .hero-portrait-card {
-    width: 236px;
+    width: 252px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -314,8 +314,10 @@
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 10px;
-    box-shadow: 0 2px 10px rgba(50, 40, 30, 0.04);
+    box-shadow: 0 4px 16px rgba(50, 40, 30, 0.05);
     transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    z-index: 2;
   }
 
   .hero-portrait-card:hover {
@@ -325,7 +327,7 @@
 
   .portrait-photo-frame {
     width: 100%;
-    aspect-ratio: 1 / 0.86;
+    aspect-ratio: 750 / 852;
     overflow: hidden;
     border-radius: calc(var(--radius-md) - 2px);
     border: 1px solid var(--border-subtle);
@@ -336,7 +338,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 10%;
+    object-position: center top;
     display: block;
     transition: transform 0.4s ease;
   }
@@ -347,15 +349,15 @@
 
   .portrait-caption {
     width: 100%;
-    margin-top: 8px;
+    margin-top: 10px;
     text-align: center;
-    padding-top: 6px;
+    padding-top: 8px;
     border-top: 1px dashed var(--border-subtle);
   }
 
   .portrait-caption-title {
     font-family: var(--font-brush);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--ink-dark);
     display: flex;
     align-items: center;
@@ -375,7 +377,7 @@
   .portrait-caption-sub {
     font-size: 0.76rem;
     color: var(--ink-light);
-    margin-top: 2px;
+    margin-top: 3px;
     font-family: var(--font-serif);
   }
 
@@ -385,20 +387,21 @@
       gap: 20px;
     }
     .hero-portrait-card {
-      width: 190px;
+      width: 210px;
       margin: 0 auto;
     }
   }
 
-  /* 背景水墨山峦装饰 (SVG) */
+  /* 背景水墨山峦装饰 (SVG)：向左展阔，淡墨青峰从小像下方微显，层峦叠嶂 */
   .hero-landscape-bg {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 320px;
-    height: 160px;
-    opacity: 0.09;
+    width: 420px;
+    height: 180px;
+    opacity: 0.13;
     pointer-events: none;
+    z-index: 1;
   }
 
   .hero-main-row {
