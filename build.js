@@ -136,7 +136,48 @@ function build() {
   fs.writeFileSync(DIST_OUTPUT_FILE, template, 'utf-8');
   fs.writeFileSync(OUTPUT_FILE, template, 'utf-8');
 
-  console.log(`✨ 编纂完成！已生成 ${DIST_OUTPUT_FILE} 与 ${OUTPUT_FILE}`);
+  // 5. 自动生成搜索引擎索引路标 (robots.txt)
+  const robotsTxt = `User-agent: *
+Allow: /
+Sitemap: https://740808.xyz/sitemap.xml
+`;
+  fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt, 'utf-8');
+  fs.writeFileSync(path.join(ROOT_DIR, 'robots.txt'), robotsTxt, 'utf-8');
+
+  // 6. 自动生成站点地图 (sitemap.xml)
+  const todayIso = new Date().toISOString().split('T')[0];
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://740808.xyz/</loc>
+    <lastmod>${todayIso}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://740808.xyz/#tab-biography</loc>
+    <lastmod>${todayIso}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://740808.xyz/#tab-essays</loc>
+    <lastmod>${todayIso}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://740808.xyz/#tab-guestbook</loc>
+    <lastmod>${todayIso}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+`;
+  fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemapXml, 'utf-8');
+  fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), sitemapXml, 'utf-8');
+
+  console.log(`✨ 编纂完成！已生成 HTML、robots.txt 及 sitemap.xml 索引文件`);
 }
 
 build();
