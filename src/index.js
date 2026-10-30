@@ -151,3 +151,5 @@ export default {
     return env.ASSETS.fetch(request);
   }
 };
+
+// Deploy trigger: 2026-10-30 11:22:20
