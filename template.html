@@ -291,7 +291,7 @@
 
   .hero-flex-layout {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 36px;
     position: relative;
@@ -303,57 +303,59 @@
     min-width: 0;
   }
 
+  /* 主人小像框：背景与草堂宣纸底色完全融为一体，高度收拢不遮挡远山 */
   .hero-portrait-card {
-    width: 250px;
+    width: 236px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    padding: 12px;
-    box-shadow: var(--shadow-card);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(50, 40, 30, 0.04);
+    transition: transform 0.3s ease, border-color 0.3s ease;
   }
 
   .hero-portrait-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-soft);
+    transform: translateY(-2px);
+    border-color: var(--border);
   }
 
   .portrait-photo-frame {
     width: 100%;
-    aspect-ratio: 750 / 852;
+    aspect-ratio: 1 / 0.86;
     overflow: hidden;
     border-radius: calc(var(--radius-md) - 2px);
     border: 1px solid var(--border-subtle);
-    background: var(--bg-paper);
+    background: transparent;
   }
 
   .hero-portrait-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 50% 10%;
     display: block;
     transition: transform 0.4s ease;
   }
 
   .hero-portrait-card:hover .hero-portrait-img {
-    transform: scale(1.025);
+    transform: scale(1.02);
   }
 
   .portrait-caption {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
     text-align: center;
-    padding-top: 8px;
-    border-top: 1px dashed var(--border);
+    padding-top: 6px;
+    border-top: 1px dashed var(--border-subtle);
   }
 
   .portrait-caption-title {
     font-family: var(--font-brush);
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: var(--ink-dark);
     display: flex;
     align-items: center;
@@ -362,7 +364,7 @@
   }
 
   .portrait-mini-seal {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--seal-red);
     border: 1px solid var(--seal-red);
     padding: 1px 4px;
@@ -371,19 +373,19 @@
   }
 
   .portrait-caption-sub {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: var(--ink-light);
-    margin-top: 3px;
+    margin-top: 2px;
     font-family: var(--font-serif);
   }
 
   @media (max-width: 820px) {
     .hero-flex-layout {
       flex-direction: column-reverse;
-      gap: 24px;
+      gap: 20px;
     }
     .hero-portrait-card {
-      width: 200px;
+      width: 190px;
       margin: 0 auto;
     }
   }
