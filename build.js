@@ -136,8 +136,8 @@ function build() {
   fs.writeFileSync(DIST_OUTPUT_FILE, template, 'utf-8');
   fs.writeFileSync(OUTPUT_FILE, template, 'utf-8');
 
-  // 复制社交分享大卡片横幅与门首小像
-  ['og-card.jpg', 'hero-portrait.jpg'].forEach(imgFile => {
+  // 复制社交分享大卡片横幅、门首小像及文章配图
+  ['og-card.jpg', 'hero-portrait.jpg', 'guaibao.jpg'].forEach(imgFile => {
     if (fs.existsSync(path.join(ROOT_DIR, imgFile))) {
       fs.copyFileSync(path.join(ROOT_DIR, imgFile), path.join(DIST_DIR, imgFile));
     }
