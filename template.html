@@ -29,6 +29,7 @@
       { "@type": "EducationalOrganization", "name": "青岛大学" }
     ],
     "url": "https://740808.xyz",
+    "email": "sunxibao@gmail.com",
     "image": "https://img.740808.xyz/SUNXIBAO.jpg",
     "sameAs": [
       "https://www.linkedin.com/in/%E5%B8%8C%E5%AE%9D-%E5%AD%99-8b0958178/",
@@ -1996,10 +1997,15 @@
       <!-- 老友相逢指引框 -->
       <div class="reunion-box">
         <h4>“相逢一笑，莫逆于心”</h4>
-        <p>若君恰为昔年故人、同学或同事，忽见此页，不妨移步至【煮茗候友】题留一二近况或雅号，待我温水烹茶，与君促膝长忆。</p>
-        <button type="button" class="submit-seal-btn" style="margin: 0 auto; display: inline-flex;" onclick="document.querySelector('[data-tab=guestbook]').click()">
-          <span>✉️</span> 移步题签留言簿 →
-        </button>
+        <p>若君恰为昔年故人、同学或同事，忽见此页，不妨移步至【煮茗候友】题留一二近况或雅号；若有长卷私语，亦可尺素传鸿至草堂信箱。待我温水烹茶，与君促膝长忆。</p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 14px;">
+          <button type="button" class="submit-seal-btn" style="margin: 0; display: inline-flex;" onclick="document.querySelector('[data-tab=guestbook]').click()">
+            <span>✉️</span> 移步题签留言簿 →
+          </button>
+          <a href="mailto:sunxibao@gmail.com" class="submit-seal-btn" style="margin: 0; display: inline-flex; text-decoration: none; background: var(--bg-paper); color: var(--seal-red); border: 1.5px solid var(--seal-red);">
+            <span>📮</span> 尺素传鸿：sunxibao@gmail.com
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -2019,7 +2025,7 @@
       <!-- 留言表单 -->
       <div class="leave-note-box">
         <h3>煎茶题壁 · 留题小笺</h3>
-        <p>山野清冷，远道来客若有所感，不妨题留一二言。主人晚课扫院归来，当奉茶拜读。</p>
+        <p>山野清冷，远道来客若有所感，不妨题留一二言。若有故人长信，亦可直寄草堂书箱：<a href="mailto:sunxibao@gmail.com" style="color: var(--seal-red); text-decoration: underline; font-weight: 500;">sunxibao@gmail.com</a>。主人扫院归来，当奉茶拜读。</p>
 
         <form id="noteForm" onsubmit="handleGuestSubmit(event)">
           <div class="form-group">
@@ -2109,8 +2115,16 @@
     <div class="footer-poem">
       “结庐在人境，而无车马喧。问君何能尔？心远地自偏。”
     </div>
+    <div style="margin: 12px 0 8px 0; font-size: 0.9rem; color: var(--ink-mid);">
+      <span>草堂书箱：</span>
+      <a href="mailto:sunxibao@gmail.com" style="color: var(--seal-red); text-decoration: underline; font-family: var(--font-sans); font-weight: 500;">
+        sunxibao@gmail.com
+      </a>
+      <span style="margin: 0 10px; color: var(--ink-faint);">|</span>
+      <span>孙希宝 谨致</span>
+    </div>
     <div class="footer-copyright">
-      东篱草堂 · 陶公后学退修书斋 · 岁次甲辰 晴耕雨读
+      东篱草堂 · 岁次甲辰 晴耕雨读 · 域名 740808.xyz
     </div>
   </footer>
 
