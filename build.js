@@ -64,7 +64,16 @@ function build() {
 
   const posts = files
     .map(parseMarkdownFile)
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter(p => {
+      const isDraft = String(p.meta.draft || '').toLowerCase() === 'true';
+      const isHidden = String(p.meta.hidden || '').toLowerCase() === 'true';
+      if (isDraft || isHidden) {
+        console.log(`   [草稿/隐藏跳过] ${p.filename} - ${p.meta.title || '无标题'}`);
+        return false;
+      }
+      return true;
+    });
 
   // 排序：优先按 order 升序，次按文件名排序
   posts.sort((a, b) => {

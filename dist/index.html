@@ -1265,6 +1265,94 @@
   }
 
   /* ==========================================================================
+     宣纸水墨即时检索条 (Instant Live Search)
+     ========================================================================== */
+  .essay-search-wrapper {
+    position: relative;
+    max-width: 320px;
+    width: 100%;
+  }
+
+  .essay-search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--bg-paper);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+    transition: all 0.25s ease;
+  }
+
+  .essay-search-bar:focus-within {
+    border-color: var(--seal-red);
+    box-shadow: 0 0 0 2px var(--seal-red-bg), inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .search-icon {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    margin-right: 8px;
+    user-select: none;
+  }
+
+  .essay-search-input {
+    border: none;
+    background: transparent;
+    font-family: var(--font-serif);
+    font-size: 0.88rem;
+    color: var(--ink-dark);
+    width: 100%;
+    outline: none;
+  }
+
+  .essay-search-input::placeholder {
+    color: var(--ink-faint);
+    font-size: 0.82rem;
+  }
+
+  .clear-search-btn {
+    background: none;
+    border: none;
+    color: var(--ink-light);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 50%;
+    transition: color 0.2s ease;
+    line-height: 1;
+  }
+
+  .clear-search-btn:hover {
+    color: var(--seal-red);
+  }
+
+  .search-count-hint {
+    font-size: 0.78rem;
+    color: var(--ink-light);
+    margin-top: 4px;
+    text-align: right;
+    min-height: 16px;
+    font-family: var(--font-brush);
+  }
+
+  .no-match-box {
+    background: var(--bg-paper);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+    padding: 40px 20px;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .no-match-poem {
+    font-family: var(--font-brush);
+    font-size: 1.25rem;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+  }
+
+  /* ==========================================================================
      履痕故知 (致故人书与编年履迹)
      ========================================================================== */
   .bio-scroll-card {
@@ -1583,11 +1671,29 @@
        栏目 1：南山随笔 (长文与读书杂记)
        ========================================================================== -->
   <main id="tab-essays" class="view-panel active">
-    <div class="section-intro-header">
+    <div class="section-intro-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
       <div>
         <h2 class="section-intro-title">南山随笔</h2>
         <p class="section-tagline">“好读书，不求甚解；每有会意，便欣然忘食。”</p>
       </div>
+
+      <!-- 宣纸水墨即时检索条 (Instant Live Search) -->
+      <div class="essay-search-wrapper">
+        <div class="essay-search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="essaySearchInput" class="essay-search-input" placeholder="检索草堂题名、时令或字句…" oninput="handleEssaySearch(this.value)" autocomplete="off">
+          <button type="button" id="clearSearchBtn" class="clear-search-btn" onclick="clearEssaySearch()" title="清除检索" style="display: none;">✕</button>
+        </div>
+        <div id="searchResultsCount" class="search-count-hint"></div>
+      </div>
+    </div>
+
+    <!-- 无检索匹配时的文人雅致提示 -->
+    <div id="noSearchMatch" class="no-match-box" style="display: none;">
+      <p class="no-match-poem">“东篱案头未检得相关篇章，不妨换个词再试……”</p>
+      <button type="button" class="tool-btn" onclick="clearEssaySearch()" style="margin: 12px auto 0 auto; display: inline-flex;">
+        <span>🔄</span> 显示全部随笔
+      </button>
     </div>
 
     <div class="essays-grid">
@@ -2783,6 +2889,70 @@
 
     dateStrEl.textContent = `岁次甲辰 · ${seasonHint}`;
   })();
+
+  /* --------------------------------------------------------------------------
+     8. 宣纸水墨 · 毫秒级即时检索（实时过滤卡片与正文篇章）
+     -------------------------------------------------------------------------- */
+  window.handleEssaySearch = function(keyword) {
+    const rawKeyword = (keyword || '').trim().toLowerCase();
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const countHint = document.getElementById('searchResultsCount');
+    const noMatchBox = document.getElementById('noSearchMatch');
+    const cards = document.querySelectorAll('.essays-grid .essay-card');
+
+    if (clearBtn) {
+      clearBtn.style.display = rawKeyword ? 'inline-block' : 'none';
+    }
+
+    if (!cards || cards.length === 0) return;
+
+    let matchCount = 0;
+
+    cards.forEach((card, idx) => {
+      if (!rawKeyword) {
+        card.style.display = '';
+        matchCount++;
+        return;
+      }
+
+      const titleText = (card.querySelector('.essay-title')?.textContent || '').toLowerCase();
+      const excerptText = (card.querySelector('.essay-excerpt')?.textContent || '').toLowerCase();
+      const metaText = (card.querySelector('.essay-meta-row')?.textContent || '').toLowerCase();
+
+      // 同步检索内存全文段落
+      const fullArchive = (typeof ARTICLE_ARCHIVE !== 'undefined' && ARTICLE_ARCHIVE[idx]) ? ARTICLE_ARCHIVE[idx] : null;
+      const fullContentText = fullArchive ? (fullArchive.content || []).join(' ').toLowerCase() : '';
+
+      const isMatch = titleText.includes(rawKeyword) ||
+                      excerptText.includes(rawKeyword) ||
+                      metaText.includes(rawKeyword) ||
+                      fullContentText.includes(rawKeyword);
+
+      if (isMatch) {
+        card.style.display = '';
+        matchCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (countHint) {
+      countHint.textContent = rawKeyword ? `检得 ${matchCount} 篇相关存卷` : '';
+    }
+
+    if (noMatchBox) {
+      noMatchBox.style.display = (matchCount === 0 && rawKeyword) ? 'block' : 'none';
+    }
+  };
+
+  window.clearEssaySearch = function() {
+    const input = document.getElementById('essaySearchInput');
+    if (input) {
+      input.value = '';
+      handleEssaySearch('');
+      input.focus();
+    }
+  };
 </script>
 </body>
 </html>
