@@ -384,17 +384,6 @@
     font-family: var(--font-serif);
   }
 
-  @media (max-width: 820px) {
-    .hero-flex-layout {
-      flex-direction: column-reverse;
-      gap: 20px;
-    }
-    .hero-portrait-card {
-      width: 210px;
-      margin: 0 auto;
-    }
-  }
-
   /* 背景水墨山峦装饰 (SVG)：向左展阔，淡墨青峰从小像下方微显，层峦叠嶂 */
   .hero-landscape-bg {
     position: absolute;
@@ -417,14 +406,14 @@
 
   .cottage-brand {
     display: flex;
-    align-items: flex-start;
-    gap: 20px;
+    align-items: center;
+    gap: 18px;
   }
 
   /* 朱砂红印章 */
   .seal-stamp {
-    width: 58px;
-    height: 58px;
+    width: 50px;
+    height: 50px;
     background: var(--seal-red);
     color: #fff;
     border-radius: 4px;
@@ -433,10 +422,10 @@
     justify-content: center;
     align-items: center;
     font-family: var(--font-brush);
-    font-size: 1.25rem;
+    font-size: 1.18rem;
     line-height: 1.1;
     letter-spacing: 0.05em;
-    padding: 4px;
+    padding: 3px;
     box-shadow: var(--shadow-seal);
     border: 2px solid rgba(255, 255, 255, 0.4);
     outline: 1.5px solid var(--seal-red);
@@ -468,20 +457,31 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
   }
 
-  /* 竖排小联语 (古典意韵) */
+  /* 竖排小联语 (古典意韵：右为上联，左为下联) */
   .vertical-couplet {
     writing-mode: vertical-rl;
     text-orientation: upright;
     font-family: var(--font-brush);
-    font-size: 1.1rem;
+    font-size: 1.08rem;
     letter-spacing: 0.25em;
     color: var(--ink-light);
     border-left: 1px dashed var(--border);
     padding-left: 14px;
-    height: 130px;
+    height: 125px;
     user-select: none;
+    display: flex;
+    gap: 8px;
+  }
+
+  .vertical-couplet .couplet-sep {
+    display: none;
+  }
+
+  .vertical-couplet .couplet-line {
+    white-space: nowrap;
   }
 
   .cottage-manifesto {
@@ -967,12 +967,6 @@
     gap: 28px;
   }
 
-  @media (max-width: 768px) {
-    .guestbook-layout {
-      grid-template-columns: 1fr;
-    }
-  }
-
   .leave-note-box {
     background: var(--bg-paper);
     border: 1px solid var(--border);
@@ -1144,12 +1138,6 @@
     padding: 42px 48px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
     position: relative;
-  }
-
-  @media (max-width: 600px) {
-    .reading-paper {
-      padding: 28px 20px;
-    }
   }
 
   .modal-close-btn {
@@ -1521,6 +1509,364 @@
     color: var(--ink-faint);
     font-size: 0.8rem;
   }
+
+  /* ==========================================================================
+     东篱草堂 · 全端水墨响应式视界体系 (Mobile / Tablet / Desktop)
+     ========================================================================== */
+
+  /* 平板中屏 (≤ 820px) */
+  @media (max-width: 820px) {
+    .hero-flex-layout {
+      flex-direction: column;
+      gap: 24px;
+    }
+    .hero-portrait-card {
+      width: 220px;
+      max-width: 70%;
+      margin: 16px auto 0 auto;
+    }
+  }
+
+  /* 移动端主断点 (≤ 768px) */
+  @media (max-width: 768px) {
+    .dongli-container {
+      padding-left: max(14px, env(safe-area-inset-left, 0px));
+      padding-right: max(14px, env(safe-area-inset-right, 0px));
+      padding-block: 16px 60px;
+    }
+
+    .cottage-hero {
+      padding: 24px 18px;
+      margin-bottom: 24px;
+    }
+
+    .hero-main-row {
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .cottage-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* 印章在移动端微调，精致端凝 */
+    .seal-stamp {
+      width: 44px;
+      height: 44px;
+      font-size: 1.05rem;
+      padding: 2px;
+      border-width: 1.5px;
+      outline-width: 1px;
+    }
+
+    .cottage-title {
+      font-size: clamp(1.85rem, 5.8vw, 2.2rem);
+      margin-bottom: 4px;
+      line-height: 1.15;
+    }
+
+    /* 采菊东篱下 · 悠然见南山：杜绝折行，字韵舒展 */
+    .cottage-subtitle {
+      font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      gap: 6px;
+    }
+
+    /* 核心优化：竖排诗句转换为横排诗笺饰带，居中成对，融于山峦草堂之中 */
+    .vertical-couplet {
+      writing-mode: horizontal-tb;
+      text-orientation: unset;
+      height: auto;
+      border-left: none;
+      padding-left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      letter-spacing: 0.16em;
+      color: var(--ink-light);
+      margin: 8px 0 0 0;
+      padding: 8px 14px;
+      background: var(--bg-hover);
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border-subtle);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+      text-align: center;
+    }
+
+    .vertical-couplet::before,
+    .vertical-couplet::after {
+      content: "〜";
+      font-size: 0.82rem;
+      color: var(--chrys-gold);
+      opacity: 0.7;
+    }
+
+    .vertical-couplet .couplet-sep {
+      display: inline-block;
+      color: var(--chrys-gold);
+      opacity: 0.8;
+      font-size: 0.9em;
+    }
+
+    .cottage-manifesto {
+      margin-top: 18px;
+      padding-top: 16px;
+      font-size: 0.94rem;
+      line-height: 1.85;
+    }
+
+    /* 归隐数据指标：弹性均布，整齐美观 */
+    .rural-stats-bar {
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .stat-pill {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: 16px;
+      flex: 1 1 calc(50% - 12px);
+      justify-content: center;
+    }
+
+    /* 煮茗候友留言壁 */
+    .guestbook-layout {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .leave-note-box {
+      padding: 20px 16px;
+    }
+
+    /* 防止 iOS Safari 在软键盘弹出时强制整体页面放大 */
+    .form-input, .form-textarea {
+      font-size: 16px;
+    }
+  }
+
+  /* 紧凑型手机屏 (≤ 600px) */
+  @media (max-width: 600px) {
+    /* 顶栏紧凑排布 */
+    .top-ribbon {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+
+    .top-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .tool-btn {
+      padding: 5px 12px;
+      font-size: 0.8rem;
+    }
+
+    /* 琴键雅集导航条顺滑滑动 */
+    .east-nav {
+      gap: 6px;
+      margin-bottom: 22px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .nav-tab-item {
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      scroll-snap-align: start;
+    }
+
+    /* 宣纸水墨检索条占满整行 */
+    .section-intro-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .essay-search-wrapper {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .essay-search-bar {
+      padding: 8px 14px;
+    }
+
+    /* 文章卡片内边距优化 */
+    .essay-card {
+      padding: 18px 16px;
+    }
+
+    .essay-title {
+      font-size: 1.18rem;
+      line-height: 1.35;
+    }
+
+    .essay-excerpt {
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .essay-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.8rem;
+    }
+
+    .read-action-link {
+      align-self: flex-end;
+    }
+
+    /* 文章阅读素笺弹层 */
+    .reading-modal {
+      padding: 10px;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .reading-paper {
+      padding: 24px 16px 36px 16px;
+      max-height: 94vh;
+      border-radius: var(--radius-sm);
+    }
+
+    .modal-close-btn {
+      top: 14px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      font-size: 1.1rem;
+    }
+
+    .modal-article-title {
+      font-size: 1.45rem;
+      line-height: 1.35;
+      padding-right: 36px;
+      margin-bottom: 10px;
+    }
+
+    .modal-article-meta {
+      font-size: 0.82rem;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+    }
+
+    .modal-article-body {
+      font-size: 0.98rem;
+      line-height: 1.9;
+    }
+
+    .modal-article-body figure.article-figure {
+      margin: 18px auto;
+    }
+
+    .modal-article-body figure.article-figure img {
+      border-width: 3px;
+    }
+
+    /* 手作网格与茶席单列展示 */
+    .crafts-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .craft-visual {
+      height: 160px;
+    }
+
+    .craft-content {
+      padding: 16px;
+    }
+
+    .gear-sections {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .gear-block {
+      padding: 18px 16px;
+    }
+
+    /* 履痕致故人书卡片 */
+    .bio-scroll-card {
+      padding: 22px 16px;
+    }
+
+    .bio-letter-title {
+      font-size: 1.45rem;
+    }
+
+    .bio-letter-body {
+      font-size: 0.95rem;
+      line-height: 1.85;
+    }
+
+    .timeline-tree {
+      padding-left: 20px;
+      margin-left: 6px;
+    }
+
+    .timeline-dot {
+      left: -27px;
+    }
+
+    .reunion-box {
+      padding: 18px 14px;
+    }
+  }
+
+  /* 窄屏手机优化 (≤ 540px) */
+  @media (max-width: 540px) {
+    .top-ribbon .ribbon-quote-sep,
+    .top-ribbon .ribbon-quote {
+      display: none;
+    }
+  }
+
+  /* 超窄微屏优化 (≤ 400px，如 iPhone SE 系列) */
+  @media (max-width: 400px) {
+    .cottage-hero {
+      padding: 18px 12px;
+    }
+
+    .cottage-brand {
+      gap: 10px;
+    }
+
+    .seal-stamp {
+      width: 40px;
+      height: 40px;
+      font-size: 0.95rem;
+    }
+
+    .cottage-title {
+      font-size: 1.7rem;
+    }
+
+    .cottage-subtitle {
+      font-size: 0.76rem;
+      letter-spacing: 0.02em;
+    }
+
+    .stat-pill {
+      min-width: 100%;
+      flex: 1 1 100%;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1535,8 +1881,8 @@
     <div class="solar-terms-badge">
       <span class="solar-dot"></span>
       <span id="currentDateStr">岁次甲辰 · 霜降三候 · 晴耕</span>
-      <span style="color: var(--ink-faint)">|</span>
-      <span>东篱晨露微凉，宜烹茶煮泉 · 归隐初吉</span>
+      <span class="ribbon-quote-sep" style="color: var(--ink-faint)">|</span>
+      <span class="ribbon-quote">东篱晨露微凉，宜烹茶煮泉 · 归隐初吉</span>
     </div>
 
     <div class="top-actions">
@@ -1588,9 +1934,11 @@
             </div>
           </div>
 
-          <!-- 竖排小诗句 -->
+          <!-- 诗韵题句 (桌面竖排两列题联，手机横排雅笺) -->
           <div class="vertical-couplet" aria-hidden="true">
-            山气日夕佳 飞鸟相与还
+            <span class="couplet-line">山气日夕佳</span>
+            <span class="couplet-sep">·</span>
+            <span class="couplet-line">飞鸟相与还</span>
           </div>
         </div>
 
