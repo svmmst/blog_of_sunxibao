@@ -145,10 +145,12 @@ function build() {
   fs.writeFileSync(DIST_OUTPUT_FILE, template, 'utf-8');
   fs.writeFileSync(OUTPUT_FILE, template, 'utf-8');
 
-  // 复制社交分享大卡片横幅、门首小像及文章配图
-  ['og-card.jpg', 'hero-portrait.jpg', 'guaibao.jpg'].forEach(imgFile => {
-    if (fs.existsSync(path.join(ROOT_DIR, imgFile))) {
-      fs.copyFileSync(path.join(ROOT_DIR, imgFile), path.join(DIST_DIR, imgFile));
+  // 复制社交分享大卡片横幅、门首小像及文章所有配图 (jpg, jpeg, png, webp, svg, ico)
+  const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.svg', '.ico']);
+  fs.readdirSync(ROOT_DIR).forEach(file => {
+    const ext = path.extname(file).toLowerCase();
+    if (imageExtensions.has(ext)) {
+      fs.copyFileSync(path.join(ROOT_DIR, file), path.join(DIST_DIR, file));
     }
   });
 
