@@ -52,6 +52,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    const apiHeaders = {
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-cache",
+      "X-Robots-Tag": "noindex, nofollow"
+    };
+
     // 1. 获取随机诗词暗号题目
     if (url.pathname === '/api/riddle') {
       const randomIndex = Math.floor(Math.random() * POETIC_RIDDLES.length);
@@ -61,7 +67,7 @@ export default {
         riddle_id: chosen.id,
         question: chosen.q
       }), {
-        headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-cache" }
+        headers: apiHeaders
       });
     }
 
@@ -80,7 +86,7 @@ export default {
           ],
           notice: "D1 待绑定"
         }), {
-          headers: { "Content-Type": "application/json; charset=utf-8" }
+          headers: apiHeaders
         });
       }
 
@@ -91,12 +97,12 @@ export default {
             "SELECT id, nickname, content, created_at FROM messages ORDER BY id DESC LIMIT 30"
           ).all();
           return new Response(JSON.stringify({ success: true, data: results || [] }), {
-            headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-cache" }
+            headers: apiHeaders
           });
         } catch (err) {
           return new Response(JSON.stringify({ success: false, error: err.message }), {
             status: 500,
-            headers: { "Content-Type": "application/json; charset=utf-8" }
+            headers: apiHeaders
           });
         }
       }
@@ -186,12 +192,12 @@ export default {
             success: true,
             message: "题签已奉入草堂文存，感谢同道留墨！"
           }), {
-            headers: { "Content-Type": "application/json; charset=utf-8" }
+            headers: apiHeaders
           });
         } catch (err) {
           return new Response(JSON.stringify({ success: false, error: err.message }), {
             status: 500,
-            headers: { "Content-Type": "application/json; charset=utf-8" }
+            headers: apiHeaders
           });
         }
       }

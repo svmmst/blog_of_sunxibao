@@ -154,9 +154,10 @@ function build() {
     }
   });
 
-  // 5. 自动生成搜索引擎索引路标 (robots.txt)
+  // 5. 自动生成搜索引擎索引路标 (robots.txt - 显式声明禁止爬虫抓取动态 API 接口，节省爬取额度)
   const robotsTxt = `User-agent: *
 Allow: /
+Disallow: /api/
 Sitemap: https://740808.xyz/sitemap.xml
 `;
   fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt, 'utf-8');
