@@ -1525,7 +1525,15 @@
   @media (max-width: 820px) {
     .hero-flex-layout {
       flex-direction: column;
+      align-items: stretch;
       gap: 24px;
+      width: 100%;
+      max-width: 100%;
+    }
+    .hero-left-column {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
     .hero-portrait-card {
       width: 220px;
@@ -1545,12 +1553,28 @@
     .cottage-hero {
       padding: 24px 18px;
       margin-bottom: 24px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .hero-flex-layout {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .hero-left-column {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
     }
 
     .hero-main-row {
       flex-direction: column;
       gap: 12px;
       align-items: stretch;
+      width: 100%;
+      max-width: 100%;
     }
 
     .cottage-brand {
@@ -1592,16 +1616,18 @@
       padding-left: 0;
       margin-left: 0;
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-size: 0.95rem;
-      letter-spacing: 0.16em;
+      gap: 6px;
+      font-size: clamp(0.82rem, 3.4vw, 0.95rem);
+      letter-spacing: 0.12em;
       color: var(--ink-light);
       margin: 8px 0 0 0;
-      padding: 8px 14px;
+      padding: 8px 10px;
       background: var(--bg-hover);
       border-radius: var(--radius-sm);
       border: 1px dashed var(--border-subtle);
@@ -1637,20 +1663,34 @@
       padding-top: 16px;
       font-size: 0.94rem;
       line-height: 1.85;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
-    /* 归隐数据指标：弹性均布，整齐美观 */
+    /* 归隐数据指标：弹性流式折行，绝不横向撑爆容器 */
     .rural-stats-bar {
+      display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       margin-top: 16px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .stat-pill {
       padding: 6px 12px;
       font-size: 0.8rem;
       border-radius: 16px;
-      flex: 1 1 calc(50% - 12px);
+      flex: 1 1 calc(50% - 10px);
+      max-width: 100%;
+      box-sizing: border-box;
       justify-content: center;
+      white-space: nowrap;
+      flex-shrink: 1;
     }
 
     /* 煮茗候友留言壁 */
