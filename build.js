@@ -178,7 +178,12 @@ Sitemap: https://740808.xyz/sitemap.xml
   fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemapXml, 'utf-8');
   fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), sitemapXml, 'utf-8');
 
-  console.log(`✨ 编纂完成！已生成 HTML、robots.txt 及 sitemap.xml 索引文件`);
+  // 7. 自动生成 Google AdSense 授权发布商声明 (ads.txt)
+  const adsTxt = `google.com, pub-1156870621287175, DIRECT, f08c47fec0942fa0\n`;
+  fs.writeFileSync(path.join(DIST_DIR, 'ads.txt'), adsTxt, 'utf-8');
+  fs.writeFileSync(path.join(ROOT_DIR, 'ads.txt'), adsTxt, 'utf-8');
+
+  console.log(`✨ 编纂完成！已生成 HTML、robots.txt、sitemap.xml 及 ads.txt 索引文件`);
 }
 
 build();
