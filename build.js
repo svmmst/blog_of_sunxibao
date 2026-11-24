@@ -154,7 +154,12 @@ function build() {
     }
   });
 
-  // 5. 自动生成搜索引擎索引路标 (robots.txt - 显式声明禁止爬虫抓取动态 API 接口，节省爬取额度)
+  // 5. 复制独立合规页面 (如 privacy.html 隐私政策声明)
+  if (fs.existsSync(path.join(ROOT_DIR, 'privacy.html'))) {
+    fs.copyFileSync(path.join(ROOT_DIR, 'privacy.html'), path.join(DIST_DIR, 'privacy.html'));
+  }
+
+  // 6. 自动生成搜索引擎索引路标 (robots.txt - 显式声明禁止爬虫抓取动态 API 接口，节省爬取额度)
   const robotsTxt = `User-agent: *
 Allow: /
 Disallow: /api/
@@ -163,7 +168,7 @@ Sitemap: https://740808.xyz/sitemap.xml
   fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt, 'utf-8');
   fs.writeFileSync(path.join(ROOT_DIR, 'robots.txt'), robotsTxt, 'utf-8');
 
-  // 6. 自动生成站点地图 (sitemap.xml - 符合 Google/Baidu 标准，严禁携带 # 锚点)
+  // 7. 自动生成站点地图 (sitemap.xml - 符合 Google/Baidu 标准，严禁携带 # 锚点)
   const todayIso = new Date().toISOString().split('T')[0];
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -173,17 +178,23 @@ Sitemap: https://740808.xyz/sitemap.xml
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://740808.xyz/privacy.html</loc>
+    <lastmod>${todayIso}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
 `;
   fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemapXml, 'utf-8');
   fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), sitemapXml, 'utf-8');
 
-  // 7. 自动生成 Google AdSense 授权发布商声明 (ads.txt)
+  // 8. 自动生成 Google AdSense 授权发布商声明 (ads.txt)
   const adsTxt = `google.com, pub-1156870621287175, DIRECT, f08c47fec0942fa0\n`;
   fs.writeFileSync(path.join(DIST_DIR, 'ads.txt'), adsTxt, 'utf-8');
   fs.writeFileSync(path.join(ROOT_DIR, 'ads.txt'), adsTxt, 'utf-8');
 
-  console.log(`✨ 编纂完成！已生成 HTML、robots.txt、sitemap.xml 及 ads.txt 索引文件`);
+  console.log(`✨ 编纂完成！已生成 HTML、robots.txt、sitemap.xml、privacy.html 及 ads.txt 索引文件`);
 }
 
 build();
